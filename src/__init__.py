@@ -802,6 +802,12 @@ Type 'e' to open emacs or 'V' to open vim to %s: %s" %
                 #  the php instance died
                 #  select timed out
                 l = self.comm_file.readline()
+                lastline = l
+                while l.strip() != "":
+                    l = self.comm_file.readline()
+                    if l.strip() != "":
+                        lastline = l
+                l = lastline
                 if l.startswith("child"):
                     ret_code = self.p.poll()
                     os.kill(self.p.pid, signal.SIGHUP)
